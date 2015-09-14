@@ -26,3 +26,12 @@ RUN apt-get install -y \
     zlib1g-dev \
     libbz2-dev \
     libtool
+
+# Set clang as default compiler
+ENV CC clang
+ENV CXX clang++
+
+# Display packages versions
+RUN clang --version
+RUN cmake --version
+RUN mysql --version
