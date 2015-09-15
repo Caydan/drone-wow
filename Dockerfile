@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install project packages
 RUN apt-get install -y \
+    mariadb-server \
     libmariadbclient-dev \
     libmysql++-dev \
     libreadline6-dev \
