@@ -1,15 +1,17 @@
-FROM ubuntu:latest
+FROM debian:latest
 
 MAINTAINER Millenium Studio <contact@millenium-studio.fr>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-RUN echo 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main' > /etc/apt/sources.list.d/mariadb.list
-RUN echo 'deb-src http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main' >> /etc/apt/sources.list.d/mariadb.list
+RUN apt-get install software-properties-common
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+RUN echo 'deb [arch=amd64,i386] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' > /etc/apt/sources.list.d/mariadb.list
+RUN echo 'deb-src http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' >> /etc/apt/sources.list.d/mariadb.list
+RUN apt-get update
 
 # Install basic packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get install -y \
     build-essential \
     clang \
     cmake \
