@@ -17,7 +17,8 @@ RUN apt-get install -y \
     clang \
     cmake \
     openssl \
-    git
+    git \
+    curl
 
 # Install project packages
 RUN apt-get install -y \
