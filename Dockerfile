@@ -29,7 +29,7 @@ RUN apt-get install -y \
     libssl-dev \
     zlib1g-dev \
     libbz2-dev \
-    libcurl-dev \
+    libcurl4-openssl-dev \
     libtool
 
 # Set clang as default compiler
