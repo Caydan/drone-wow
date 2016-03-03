@@ -17,8 +17,7 @@ RUN apt-get install -y \
     clang \
     cmake \
     openssl \
-    git \
-    curl
+    git
 
 # Install project packages
 RUN apt-get install -y \
@@ -30,6 +29,7 @@ RUN apt-get install -y \
     libssl-dev \
     zlib1g-dev \
     libbz2-dev \
+    libcurl-dev \
     libtool
 
 # Set clang as default compiler
