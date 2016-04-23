@@ -27,7 +27,9 @@ RUN apt-get install -y \
     zlib1g-dev \
     libbz2-dev \
     libcurl4-openssl-dev \
-    libtool
+    libtool \
+    binutils-dev \
+    libncurses-dev
 
 # Set clang as default compiler
 ENV CC clang
