@@ -4,8 +4,7 @@ MAINTAINER Millenium Studio <contact@millenium-studio.fr>
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-RUN echo 'deb [arch=amd64,i386] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' > /etc/apt/sources.list.d/mariadb.list
-RUN echo 'deb-src http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' >> /etc/apt/sources.list.d/mariadb.list
+RUN echo -e "deb [arch=amd64,i386] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main\ndeb-src http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main" >> /etc/apt/sources.list.d/mariadb.list
 
 # Install basic packages
 RUN apt-get update && \
@@ -29,7 +28,8 @@ RUN apt-get install -y \
     libcurl4-openssl-dev \
     libtool \
     binutils-dev \
-    libncurses-dev
+    libncurses-dev \
+    libiberty-dev
 
 # Set clang as default compiler
 ENV CC clang
