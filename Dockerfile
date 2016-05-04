@@ -30,6 +30,7 @@ RUN apt-get install -y \
     libtool \
     binutils-dev \
     libncurses-dev \
+    libtbb-dev \
     libiberty-dev
 
 # Set clang as default compiler
