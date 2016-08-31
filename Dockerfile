@@ -31,7 +31,13 @@ RUN apt-get install -y \
     binutils-dev \
     libncurses-dev \
     libtbb-dev \
-    libiberty-dev
+    libiberty-dev \
+    libboost-dev \
+    libboost-thread-dev \
+    libboost-system-dev \
+    libboost-filesystem-dev \
+    libboost-program-options-dev \
+    libboost-iostreams-dev
 
 # Set clang as default compiler
 ENV CC clang
