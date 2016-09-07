@@ -44,8 +44,6 @@ RUN wget http://downloads.sourceforge.net/project/boost/boost/${boost_version}/$
     && ./bootstrap.sh \
     && ./b2 --without-python --prefix=/usr -j 4 link=shared runtime-link=shared install \
     && cd .. && rm -rf ${boost_dir} && ldconfig    
-    
-RUN 
 
 # Set clang as default compiler
 ENV CC clang
