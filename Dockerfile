@@ -31,7 +31,8 @@ RUN apt-get install -y \
     binutils-dev \
     libncurses-dev \
     libtbb-dev \
-    libiberty-dev
+    libiberty-dev \
+    wget
     
 ARG boost_version=1.59.0
 ARG boost_dir=boost_1_59_0
