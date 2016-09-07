@@ -31,13 +31,21 @@ RUN apt-get install -y \
     binutils-dev \
     libncurses-dev \
     libtbb-dev \
-    libiberty-dev \
-    libboost-dev \
-    libboost-thread-dev \
-    libboost-system-dev \
-    libboost-filesystem-dev \
-    libboost-program-options-dev \
-    libboost-iostreams-dev
+    libiberty-dev
+    
+ARG boost_version=1.59.0
+ARG boost_dir=boost_1_59_0
+ENV boost_version ${boost_version}
+
+RUN wget http://downloads.sourceforge.net/project/boost/boost/${boost_version}/${boost_dir}.tar.gz \
+    && tar xfz ${boost_dir}.tar.gz \
+    && rm ${boost_dir}.tar.gz \
+    && cd ${boost_dir} \
+    && ./bootstrap.sh \
+    && ./b2 --without-python --prefix=/usr -j 4 link=shared runtime-link=shared install \
+    && cd .. && rm -rf ${boost_dir} && ldconfig    
+    
+RUN 
 
 # Set clang as default compiler
 ENV CC clang
