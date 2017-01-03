@@ -12,7 +12,7 @@ RUN echo 'deb https://repo.percona.com/apt jessie main\ndeb-src http://repo.perc
 RUN echo 'Package: *\nPin: release o=Percona Development Team\nPin-Priority: 1001' > /etc/apt/preferences.d/00percona.pref
 
 # Install basic packages
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     build-essential \
     clang \
     cmake \
