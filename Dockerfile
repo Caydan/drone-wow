@@ -3,8 +3,8 @@ MAINTAINER FAT <contact@fat.sh>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN  apt-get update && apt-get install -y \
-    apt-transport-https
+RUN apt-get update && apt-get install -y \
+    apt-transport-https \
     ca-certificates
 
 RUN apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
