@@ -3,13 +3,16 @@ MAINTAINER FAT <contact@fat.sh>
 
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN  apt-get update && apt-get install -y \
+    apt-transport-https
+    ca-certificates
+
 RUN apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
 RUN echo 'deb https://repo.percona.com/apt jessie main\ndeb-src http://repo.percona.com/apt jessie main' > /etc/apt/sources.list.d/percona.list
-
 RUN echo 'Package: *\nPin: release o=Percona Development Team\nPin-Priority: 1001' > /etc/apt/preferences.d/00percona.pref
 
 # Install basic packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get install -y \
     build-essential \
     clang \
     cmake \
