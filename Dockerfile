@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install project packages
 RUN apt-get install -y \
-    #percona-server-server-5.5 \
+    percona-server-client-5.5 \
     libperconaserverclient18-dev \
     libmysql++-dev \
     libreadline6-dev \
