@@ -1,15 +1,20 @@
 FROM debian:jessie
-MAINTAINER Millenium Studio <contact@millenium-studio.fr>
+MAINTAINER FAT <contact@fat.sh>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-RUN echo 'deb [arch=amd64,i386] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' > /etc/apt/sources.list.d/mariadb.list
-RUN echo 'deb-src http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' >> /etc/apt/sources.list.d/mariadb.list
+RUN apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
+RUN echo '
+deb https://repo.percona.com/apt jessie main
+deb-src http://repo.percona.com/apt jessie main' > /etc/apt/sources.list.d/percona.list
+
+RUN echo '
+Package: *
+Pin: release o=Percona Development Team
+Pin-Priority: 1001' > /etc/apt/preferences.d/00percona.pref
 
 # Install basic packages
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt-get update && apt-get install -y \
     build-essential \
     clang \
     cmake \
@@ -18,8 +23,8 @@ RUN apt-get update && \
 
 # Install project packages
 RUN apt-get install -y \
-    mariadb-server \
-    libmariadbclient-dev \
+    #percona-server-server-5.5 \
+    libperconaserverclient18-dev \
     libmysql++-dev \
     libreadline6-dev \
     libace-dev \
@@ -34,7 +39,7 @@ RUN apt-get install -y \
     libiberty-dev \
     wget \
     unzip
-    
+
 ARG boost_version=1.59.0
 ARG boost_dir=boost_1_59_0
 ENV boost_version ${boost_version}
@@ -45,7 +50,7 @@ RUN wget http://downloads.sourceforge.net/project/boost/boost/${boost_version}/$
     && cd ${boost_dir} \
     && ./bootstrap.sh \
     && ./b2 --without-python --prefix=/usr -j 4 link=shared runtime-link=shared install \
-    && cd .. && rm -rf ${boost_dir} && ldconfig    
+    && cd .. && rm -rf ${boost_dir} && ldconfig
 
 # Set clang as default compiler
 ENV CC clang
