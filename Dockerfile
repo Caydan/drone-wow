@@ -7,9 +7,9 @@ RUN apt-get update && apt-get install -y \
     apt-transport-https \
     ca-certificates
 
-RUN apt-key adv --keyserver keys.gnupg.net --recv-keys 8507EFA5
-RUN echo 'deb https://repo.percona.com/apt jessie main\ndeb-src http://repo.percona.com/apt jessie main' > /etc/apt/sources.list.d/percona.list
-RUN echo 'Package: *\nPin: release o=Percona Development Team\nPin-Priority: 1001' > /etc/apt/preferences.d/00percona.pref
+#RUN apt-key adv --keyserver keys.gnupg.net --recv-keys 8507EFA5
+#RUN echo 'deb https://repo.percona.com/apt jessie main\ndeb-src http://repo.percona.com/apt jessie main' > /etc/apt/sources.list.d/percona.list
+#RUN echo 'Package: *\nPin: release o=Percona Development Team\nPin-Priority: 1001' > /etc/apt/preferences.d/00percona.pref
 
 # Install basic packages
 RUN apt-get update && apt-get install -y \
@@ -17,10 +17,15 @@ RUN apt-get update && apt-get install -y \
     clang \
     cmake \
     openssl \
+    wget \
     git
+    
+# Install perconna packages from apt
+RUN wget https://repo.percona.com/apt/percona-release_0.1-4.jessie_all.deb
+RUN dpkg -i percona-release_0.1-4.jessie_all.deb
 
 # Install project packages
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     percona-server-client-5.5 \
     libperconaserverclient18-dev \
     libmysql++-dev \
