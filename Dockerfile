@@ -15,7 +15,7 @@ RUN echo 'deb http://apt.llvm.org/jessie/ llvm-toolchain-jessie-3.9 main' > /etc
 RUN echo 'deb-src http://apt.llvm.org/jessie/ llvm-toolchain-jessie-3.9 main' >> /etc/apt/sources.list.d/clang.list
 
 # Install percona packages from apt
-RUN wget -O - https://repo.percona.com/apt/percona-release_0.1-4.jessie_all.deb
+RUN wget https://repo.percona.com/apt/percona-release_0.1-4.jessie_all.deb
 RUN dpkg -i percona-release_0.1-4.jessie_all.deb
 
 # Install basic compilation packages
