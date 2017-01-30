@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:jessie-slim
 MAINTAINER FAT <contact@fat.sh>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -41,7 +41,8 @@ RUN apt-get update && apt-get install -y \
     binutils-dev \
     libncurses-dev \
     libtbb-dev \
-    libiberty-dev
+    libiberty-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 ARG boost_version=1.59.0
 ARG boost_dir=boost_1_59_0
