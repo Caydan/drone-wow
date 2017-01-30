@@ -56,5 +56,5 @@ RUN wget http://downloads.sourceforge.net/project/boost/boost/${boost_version}/$
     && ./b2 --without-python --prefix=/usr -j 4 link=shared runtime-link=shared install \
     && cd .. && rm -rf ${boost_dir} && ldconfig
 
-ENV CC clang
-ENV CXX clang++
+ENV CC clang-3.9
+ENV CXX clang++-3.9
