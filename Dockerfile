@@ -12,49 +12,35 @@ RUN apt-get update && apt-get install -y \
 # Install llvm/clang repo
 RUN wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 RUN echo 'deb http://apt.llvm.org/jessie/ llvm-toolchain-jessie-3.9 main' > /etc/apt/sources.list.d/clang.list
-RUN echo 'deb-src http://apt.llvm.org/jessie/ llvm-toolchain-jessie-3.9 main' >> /etc/apt/sources.list.d/clang.list
+
+RUN echo 'deb http://deb.debian.org/debian stretch main' > /etc/apt/sources.list.d/debian-stretch.list
+RUN echo 'APT::Default-Release "jessie";' > /etc/apt/apt.conf.d/default-release
 
 # Install percona packages from apt
-RUN wget https://repo.percona.com/apt/percona-release_0.1-4.jessie_all.deb
-RUN dpkg -i percona-release_0.1-4.jessie_all.deb
+RUN wget https://repo.percona.com/apt/percona-release_0.1-4.jessie_all.deb \
+    && dpkg -i percona-release_0.1-4.jessie_all.deb \
+    && rm percona-release_0.1-4.jessie_all.deb
 
-# Install basic compilation packages
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    clang-3.9 \
+RUN apt-get update && apt-get install -t stretch -y \
+    libboost-dev
+
+RUN apt-get install -y \
+    git \
     cmake \
-    openssl \
-    git
-
-# Install project packages
-RUN apt-get update && apt-get install -y \
+    make \
+    gcc \
+    g++ \
+    clang-3.9 \
     percona-server-client-5.5 \
     libperconaserverclient18-dev \
-    libmysql++-dev \
+    libssl-dev \
+    libbz2-dev \
+    libncurses-dev \
     libreadline6-dev \
     libace-dev \
-    libssl-dev \
-    zlib1g-dev \
-    libbz2-dev \
-    libcurl4-openssl-dev \
-    libtool \
-    binutils-dev \
-    libncurses-dev \
-    libtbb-dev \
-    libiberty-dev \
+    gdb \
+    curl \
     && rm -rf /var/lib/apt/lists/*
-
-ARG boost_version=1.59.0
-ARG boost_dir=boost_1_59_0
-ENV boost_version ${boost_version}
-
-RUN wget http://downloads.sourceforge.net/project/boost/boost/${boost_version}/${boost_dir}.tar.gz \
-    && tar xfz ${boost_dir}.tar.gz \
-    && rm ${boost_dir}.tar.gz \
-    && cd ${boost_dir} \
-    && ./bootstrap.sh \
-    && ./b2 --without-python --prefix=/usr -j 4 link=shared runtime-link=shared install \
-    && cd .. && rm -rf ${boost_dir} && ldconfig
 
 ENV CC clang-3.9
 ENV CXX clang++-3.9
