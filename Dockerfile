@@ -3,28 +3,21 @@ MAINTAINER FAT <contact@fat.sh>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# System essentals
+RUN echo 'deb http://deb.debian.org/debian stretch main' > /etc/apt/sources.list.d/debian-stretch.list
+RUN echo 'Package: *\nPin: release a=jessie\nPin-Priority: 900' > /etc/apt/preferences.d/debian-stretch
+RUN echo 'Package: libboost-dev\nPin: release a=stretch\nPin-Priority: 910' >> /etc/apt/preferences.d/debian-stretch
+
+RUN echo 'deb http://apt.llvm.org/jessie/ llvm-toolchain-jessie-3.9 main' > /etc/apt/sources.list.d/clang.list
+RUN apt-key adv --fetch-keys http://apt.llvm.org/llvm-snapshot.gpg.key
+
 RUN apt-get update && apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
     wget
 
-# Install llvm/clang repo
-RUN wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-RUN echo 'deb http://apt.llvm.org/jessie/ llvm-toolchain-jessie-3.9 main' > /etc/apt/sources.list.d/clang.list
-
-RUN echo 'deb http://deb.debian.org/debian stretch main' > /etc/apt/sources.list.d/debian-stretch.list
-RUN echo 'APT::Default-Release "jessie";' > /etc/apt/apt.conf.d/default-release
-
-# Install percona packages from apt
 RUN wget https://repo.percona.com/apt/percona-release_0.1-4.jessie_all.deb \
     && dpkg -i percona-release_0.1-4.jessie_all.deb \
     && rm percona-release_0.1-4.jessie_all.deb
 
-RUN apt-get update && apt-get install -t stretch -y \
-    libboost-dev
-
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     git \
     cmake \
     make \
@@ -40,7 +33,7 @@ RUN apt-get install -y \
     libace-dev \
     gdb \
     curl \
-    && rm -rf /var/lib/apt/lists/*
+    libboost-all-dev
 
 ENV CC clang-3.9
 ENV CXX clang++-3.9
